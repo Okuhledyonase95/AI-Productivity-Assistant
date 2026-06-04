@@ -1,322 +1,100 @@
 # AI Workplace Productivity Assistant
 
-## Overview
+A modern, responsive SaaS-style web app that helps professionals automate everyday workplace tasks using AI. Built on TanStack Start with Lovable Cloud and the Lovable AI Gateway.
 
-AI Workplace Productivity Assistant is a modern, responsive web application designed to help professionals automate common workplace tasks using Artificial Intelligence.
+## Project Overview
 
-The platform combines multiple AI-powered productivity tools into a single dashboard, enabling users to generate professional emails, summarize meeting notes, create task plans, conduct research, and interact with an AI assistant.
-
-The application focuses on improving workplace efficiency while maintaining transparency through responsible AI practices.
-
----
+The AI Workplace Productivity Assistant brings five focused AI tools into one clean dashboard with sidebar navigation. Every AI output is editable, copyable, and regenerable, and a Responsible AI disclaimer is shown throughout to remind users to verify generated content before business use.
 
 ## Features
 
-### Smart Email Generator
+- **Smart Email Generator** — Generate professional emails from a short brief with tone and recipient controls.
+- **Meeting Notes Summarizer** — Turn raw notes/transcripts into Executive Summary, Key Decisions, Action Items, and Risks.
+- **AI Task Planner** — Break goals into prioritized milestones with suggested timelines.
+- **AI Research Assistant** — Produce structured briefings: findings, opportunities, risks, recommendations.
+- **AI Chatbot Interface** — Conversational assistant for writing, brainstorming, and productivity help.
+- **Modern Dashboard UI** with sidebar navigation, fully responsive (desktop, tablet, mobile).
+- **Editable AI outputs** with copy and regenerate actions.
+- **Responsible AI disclaimer** across the app.
 
-Generate professional emails from simple instructions.
+## Tools & Technologies
 
-**Capabilities**
-
-* Multiple tone options
-* Structured email formatting
-* Editable output
-* Copy and regenerate functionality
-
----
-
-### Meeting Notes Summarizer
-
-Convert meeting transcripts into concise summaries.
-
-**Outputs**
-
-* Executive Summary
-* Key Decisions
-* Action Items
-* Risks and Follow-ups
-
----
-
-### AI Task Planner
-
-Transform goals into actionable plans.
-
-**Capabilities**
-
-* Task breakdowns
-* Milestone creation
-* Priority-based planning
-* Timeline recommendations
-
----
-
-### AI Research Assistant
-
-Generate research reports on business topics.
-
-**Outputs**
-
-* Executive summaries
-* Key findings
-* Opportunities
-* Risks
-* Recommendations
-* Source references
-
----
-
-### AI Chatbot Interface
-
-A conversational AI assistant for workplace productivity.
-
-**Use Cases**
-
-* Business writing assistance
-* Brainstorming
-* Knowledge support
-* Productivity guidance
-
----
-
-### Dashboard Analytics
-
-Monitor AI usage through a centralized dashboard.
-
-**Metrics**
-
-* Emails generated
-* Meeting summaries created
-* Tasks planned
-* Research reports generated
-* Chat interactions
-
----
-
-### Responsive Design
-
-Optimized for:
-
-* Desktop
-* Tablet
-* Mobile devices
-
----
-
-### Editable AI Outputs
-
-All AI-generated content can be:
-
-* Edited
-* Saved
-* Copied
-* Regenerated
-
----
-
-### Responsible AI Notice
-
-The application includes AI transparency and responsible-use messaging to encourage users to verify generated content before business use.
-
----
-
-## Tools & Technologies Used
-
-### Frontend
-
-* Next.js
-* React
-* TypeScript
-* Tailwind CSS
-* Shadcn/UI
-* Framer Motion
-
-### Backend
-
-* Node.js
-* Next.js API Routes
-
-### AI Integration
-
-* OpenAI API
-
-### Database
-
-* PostgreSQL
-* Prisma ORM
-
-### Authentication
-
-* NextAuth.js
-
-### Deployment
-
-* Vercel
-* Supabase
-
-### Development Tools
-
-* ESLint
-* Prettier
-* Git
-* GitHub
-
----
+- **Framework:** TanStack Start v1 (React 19, file-based routing, server functions)
+- **Build:** Vite 7
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4 + shadcn/ui components
+- **State/Data:** TanStack Query
+- **Backend:** Lovable Cloud (managed Postgres, Auth, Storage)
+- **AI:** Lovable AI Gateway (`google/gemini-3-flash-preview`)
+- **Server logic:** `createServerFn` (TanStack server functions) — no separate API server needed
+- **Package manager:** Bun
 
 ## Project Structure
 
-```text
+```
 src/
-├── app/
 ├── components/
-│   ├── dashboard/
-│   ├── email/
-│   ├── meeting/
-│   ├── planner/
-│   ├── research/
-│   ├── chatbot/
-│   └── shared/
-├── hooks/
+│   ├── app-sidebar.tsx        # Sidebar navigation
+│   ├── tool-shell.tsx         # Shared layout for AI tools
+│   └── ui/                    # shadcn/ui primitives
+├── integrations/supabase/     # Auto-generated Lovable Cloud client
 ├── lib/
-│   ├── openai.ts
-│   ├── prompts.ts
-│   └── utils.ts
-├── services/
-├── store/
-├── types/
-└── styles/
+│   ├── ai.functions.ts        # Server function calling Lovable AI Gateway
+│   └── use-ai.ts              # Client hook for AI calls
+├── routes/
+│   ├── __root.tsx             # App shell + sidebar
+│   ├── index.tsx              # Dashboard
+│   ├── email.tsx              # Smart Email Generator
+│   ├── meetings.tsx           # Meeting Notes Summarizer
+│   ├── tasks.tsx              # AI Task Planner
+│   ├── research.tsx           # AI Research Assistant
+│   └── chat.tsx               # AI Chatbot
+└── styles.css                 # Design tokens (OKLCH)
 ```
 
----
-
-## Installation & Setup
+## Setup Instructions
 
 ### Prerequisites
 
-Before starting, ensure you have installed:
+- [Bun](https://bun.sh) (or Node.js 20+)
+- A Lovable project with Lovable Cloud enabled (this repo already includes the configuration)
 
-* Node.js (v18 or later)
-* npm or yarn
-* PostgreSQL database
-* OpenAI API key
-
----
-
-### Clone Repository
+### 1. Install dependencies
 
 ```bash
-git clone https://github.com/your-username/ai-workplace-productivity-assistant.git
-
-cd ai-workplace-productivity-assistant
+bun install
 ```
 
----
+### 2. Environment variables
 
-### Install Dependencies
+Lovable Cloud auto-generates `.env` with:
 
-Using npm:
+```
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_PUBLISHABLE_KEY=...
+VITE_SUPABASE_PROJECT_ID=...
+```
+
+The server-side `LOVABLE_API_KEY` (used by the AI Gateway) is provisioned automatically in the Lovable runtime — no manual setup required.
+
+### 3. Run the dev server
 
 ```bash
-npm install
+bun run dev
 ```
 
-Or using yarn:
+Open the preview URL printed in the terminal.
+
+### 4. Build for production
 
 ```bash
-yarn install
+bun run build
 ```
-
----
-
-### Configure Environment Variables
-
-Create a `.env.local` file in the root directory.
-
-```env
-DATABASE_URL=your_postgresql_connection_string
-
-OPENAI_API_KEY=your_openai_api_key
-
-NEXTAUTH_SECRET=your_secret_key
-
-NEXTAUTH_URL=http://localhost:3000
-```
-
----
-
-### Run Database Migrations
-
-```bash
-npx prisma migrate dev
-```
-
----
-
-### Start Development Server
-
-```bash
-npm run dev
-```
-
-Application will be available at:
-
-```text
-http://localhost:3000
-```
-
----
-
-## Build for Production
-
-```bash
-npm run build
-```
-
-Run production server:
-
-```bash
-npm start
-```
-
----
 
 ## Responsible AI Disclaimer
 
-AI-generated content may contain inaccuracies, omissions, biases, or outdated information.
-
-Users should review and verify all outputs before using them for:
-
-* Business communications
-* Legal decisions
-* Financial decisions
-* Compliance activities
-* Strategic planning
-
-This application is designed to assist professionals and does not replace human judgment.
-
----
-
-## Future Enhancements
-
-* Team collaboration
-* Role-based access control
-* Document upload and analysis
-* Calendar integration
-* CRM integration
-* Voice assistant support
-* Multi-language support
-* AI workflow automation
-
----
+AI-generated content may contain inaccuracies, omissions, biases, or outdated information. Always review and verify outputs before using them for business communications, legal, financial, compliance, or strategic decisions. This app assists professionals — it does not replace human judgment.
 
 ## License
 
-This project is licensed under the MIT License.
-
----
-
-## Author
-
-AI Workplace Productivity Assistant
-
-Built to help professionals work smarter with AI.
+MIT
